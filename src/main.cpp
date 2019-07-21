@@ -63,6 +63,8 @@ NexWaveform p2s0 = NexWaveform(2, 9, "s0", &page2);   // Wasmachine waveform
 
 NexText p5t5 = NexText(5, 13, "t5", &page5);          // IPAddress
 
+NexRtc  rtc;
+
 //Register a button object to the touch event list  
 NexTouch *nex_listen_list[] = {
   &p0b0,
@@ -218,6 +220,11 @@ void callback(String topic, byte* message, unsigned int length) {
     // Whiskeykast button (button: p1bt1)
     const char* tempval = mqttjson["POWER"];
     if(strcmp(tempval, "ON") == 0){ p1bt1.setValue(1); } else if(strcmp(tempval, "OFF") == 0){ p1bt1.setValue(0); }
+    // Sync RTC Clock
+    int d_y, d_m, d_d, t_h, t_m, t_s;
+    sscanf(mqttjson["Time"], "%4d-%2d-%2dT%2d:%2d:%2d", &d_y, &d_m, &d_d, &t_h, &t_m, &t_s);
+    uint32_t  time[7] = {d_y,d_m,d_d,t_h,t_m,t_s};
+    rtc.write_rtc_time(time);
   }
   else if((topic=="stat/vensterbankvoor/RESULT") || (topic=="tele/vensterbankvoor/STATE")){
     // Vensterbankvoor button (button: p1bt2)
