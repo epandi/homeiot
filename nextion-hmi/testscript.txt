@@ -1,0 +1,91 @@
+sendCommand: bkcmd=3
+recv command err value: 0
+recvRetCommandFinished err
+sendCommand: page 0
+recv command err value: 25
+recvRetCommandFinished err
+
+Connecting to Pandelaar
+....
+WiFi connected - IP: 192.168.1.51 | SUBNET: 255.255.252.0 | GATEWAY: 192.168.0.1
+sendCommand: page0.t2.bco=28651
+sendCommand: ref page0.t2
+recv command err value: 0
+recvRetCommandFinished err
+sendCommand: page5.t5.txt="192.168.1.51"
+recv command err value: 10
+recvRetCommandFinished err
+Connecting to MQTT...
+connected
+sendCommand: page0.t1.bco=28651
+sendCommand: ref page0.t1
+recv command err value: 0
+recvRetCommandFinished err
+Wakeup: retrieve all device states
+Message arrived on topic: stat/wasmachine/RESULT. Message: {"Time":"2019-07-19T23:15:54","Uptime":"76T12:56:45","Vcc":3.399,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":60}}
+
+Message arrived on topic: stat/vensterbankvoor/RESULT. Message: {"Time":"2019-07-19T23:15:54","Uptime":"82T09:27:44","Vcc":3.390,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":72,"LinkCount":3,"Downtime":"0T00:00:54"}}
+sendCommand: page1.bt2.val=1
+recv command err value: 0
+recvRetCommandFinished err
+
+Message arrived on topic: stat/hobbyblinds/RESULT. Message: {"Time":"2019-07-19T23:15:54","Uptime":"22T03:46:17","SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER1":"OFF","POWER2":"OFF","POWER3":"OFF","POWER4":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100,"LinkCount":1,"Downtime":"0T00:00:06","DeepSleep":0,"Heap":30424}}
+
+Message arrived on topic: stat/fleurcam/RESULT. Message: {"Time":"2019-07-19T23:15:54","Uptime":"47T09:46:55","Vcc":3.523,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100}}
+
+Message arrived on topic: stat/whiskeykast/RESULT. Message: {"Time":"2019-07-19T23:15:55","Uptime":"62T06:35:05","Vcc":3.423,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"POWER":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":68}}
+sendCommand: page1.bt1.val=0
+recv command err value: 0
+recvRetCommandFinished err
+
+Message arrived on topic: stat/buffetkast/RESULT. Message: {"Time":"2019-07-19T23:15:55","Uptime":"82T09:26:08","Vcc":3.398,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"POWER":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":42}}
+sendCommand: page1.bt0.val=0
+recv command err value: 0
+recvRetCommandFinished err
+
+Message arrived on topic: tele/wasmachine/STATE. Message: {"Time":"2019-07-19T23:16:10","Uptime":"76T12:57:01","Vcc":3.399,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":60}}
+
+Message arrived on topic: tele/wasmachine/SENSOR. Message: {"Time":"2019-07-19T23:16:10","ENERGY":{"TotalStartTime":"2018-11-24T22:05:23","Total":138.804,"Yesterday":0.632,"Today":0.000,"Period":0,"Power":0,"ApparentPower":0,"ReactivePower":0,"Factor":0.00,"Voltage":228,"Current":0.000}}
+sendCommand: page2.n0.val=228
+recv command err value: 0
+recvRetCommandFinished err
+sendCommand: page2.n1.val=0
+recv command err value: 2
+recvRetCommandFinished err
+sendCommand: page2.t0.txt="0.000"
+recv command err value: 6
+recvRetCommandFinished err
+
+Message arrived on topic: tele/hobbyblinds/STATE. Message: {"Time":"2019-07-19T23:16:26","Uptime":"22T03:46:49","SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER1":"OFF","POWER2":"OFF","POWER3":"OFF","POWER4":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100,"LinkCount":1,"Downtime":"0T00:00:06","DeepSleep":0,"Heap":30424}}
+
+Message arrived on topic: tele/hobbyblinds/SENSOR. Message: {"Time":"2019-07-19T23:16:26","SHUTTER-1":{"position":100, "direction":0}}
+sendCommand: page0.h1.val=100
+recv command err value: 0
+recvRetCommandFinished err
+sendCommand: page0.n1.val=100
+recv command err value: 0
+recvRetCommandFinished err
+sendCommand: page0.n1.bco=63390
+sendCommand: ref page0.n1
+recv command err value: 0
+recvRetCommandFinished err
+
+---------
+
+bkcmd=3
+page 0
+page0.t2.bco=28651
+ref page0.t2
+page5.t5.txt="192.168.1.51"
+page0.t1.bco=28651
+ref page0.t1
+page1.bt2.val=1
+page1.bt1.val=0
+page1.bt0.val=0
+page2.n0.val=228
+page2.n1.val=0
+page2.t0.txt="0.000"
+page0.h1.val=100
+page0.n1.val=100
+page0.n1.bco=63390
+ref page0.n1
