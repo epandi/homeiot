@@ -157,10 +157,12 @@ void p5t5PushCallback(void *ptr)
   if (!Serial) {
     // Enable Debugging
     Serial.begin(115200);
+    ArduinoOTA.begin();
     p5t5.Set_background_color_bco (28651);
   } else {
     // Disable Debugging
     Serial.end();
+    ArduinoOTA.end();
     p5t5.Set_background_color_bco (65535);
   }
 }
@@ -349,7 +351,6 @@ void setup(void) {
       else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
       else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
-  ArduinoOTA.begin();
 }
 
 void loop(void){
