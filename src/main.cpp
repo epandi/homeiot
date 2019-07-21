@@ -154,12 +154,14 @@ void p1bt2PushCallback(void *ptr)
 }
 void p5t5PushCallback(void *ptr)
 {
-  if (!Serial) {
+  uint32_t bgc;
+  p5t5.Get_background_color_bco(&bgc);
+  if (bgc == 65535) { // White background color
     // Enable Debugging
     Serial.begin(115200);
     ArduinoOTA.begin();
     p5t5.Set_background_color_bco (28651);
-  } else {
+  } else if (bgc == 28651) { // Green background color
     // Disable Debugging
     Serial.end();
     ArduinoOTA.end();
