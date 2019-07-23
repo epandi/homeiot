@@ -300,10 +300,11 @@ void setup_mqtt() {
       digitalWrite (BUILTIN_LED, LOW);
       dbSerial.println("connected");
       p6t1.Set_background_color_bco(28651);   // Green background color
-      MQTTClient.subscribe("stat/+/RESULT");  // Power on/off change data
-      MQTTClient.subscribe("tele/+/STATE");   // Power on/off periodic state data
-      MQTTClient.subscribe("tele/+/SENSOR");  // Sensor periodic data 
-      MQTTClient.subscribe("tele/+/LWT");     // Online/Offline status of devices
+      MQTTClient.subscribe("stat/+/RESULT");  // stat/+/RESULT: Power on/off change data
+      MQTTClient.subscribe("tele/+/RESULT");  // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
+      MQTTClient.subscribe("tele/+/STATE");   // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
+      MQTTClient.subscribe("tele/+/SENSOR");  // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
+      MQTTClient.subscribe("tele/+/LWT");     // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
       wakeup();
     } else {
       dbSerial.print("failed with state ");
