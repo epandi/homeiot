@@ -40,6 +40,7 @@ NexPage page2 = NexPage(2, 0, "page2");               // Page2 Energy
 NexPage page3 = NexPage(3, 0, "page3");               // Page3
 NexPage page4 = NexPage(4, 0, "page4");               // Page4
 NexPage page5 = NexPage(5, 0, "page5");               // Page5 About
+NexPage page6 = NexPage(6, 0, "page6");               // Page5 Debugging
 
 NexButton p0b0 = NexButton(0, 1, "b0", &page0);       // Fleurblinds open
 NexButton p0b1 = NexButton(0, 2, "b1", &page0);       // Fleurblinds close
@@ -49,8 +50,6 @@ NexButton p0b2 = NexButton(0, 3, "b2", &page0);       // Hobbyblinds open
 NexButton p0b3 = NexButton(0, 4, "b3", &page0);       // Hobbyblinds close
 NexNumber p0n1 = NexNumber(0, 8, "n1", &page0);       // Hobbyblinds percentage
 NexSlider p0h1 = NexSlider(0, 6, "h1", &page0);       // Hobbyblinds slider
-NexText p0t1 = NexText(0, 16, "t1", &page0);          // MQTT Connected textbox
-NexText p0t2 = NexText(0, 17, "t2", &page0);          // Wifi Connected textbox
 
 NexDSButton p1bt0 = NexDSButton(1, 7, "bt0", &page1); // Buffetkast button
 NexDSButton p1bt1 = NexDSButton(1, 8, "bt1", &page1); // Whiskeykast button
@@ -63,34 +62,38 @@ NexWaveform p2s0 = NexWaveform(2, 9, "s0", &page2);   // Wasmachine waveform
 
 NexText p5t5 = NexText(5, 13, "t5", &page5);          // IPAddress
 
+NexText p6t0 = NexText(6, 4, "t0", &page6);           // Debugging
+NexText p6t1 = NexText(6, 2, "t1", &page6);           // MQTT Connected textbox
+NexText p6t2 = NexText(6, 3, "t2", &page6);           // fleurblinds
+NexText p6t3 = NexText(6, 5, "t3", &page6);           // whiskeykast
+NexText p6t4 = NexText(6, 6, "t4", &page6);           // wasmachine
+NexText p6t5 = NexText(6, 7, "t5", &page6);           // vensterbankvoor
+NexText p6t6 = NexText(6, 8, "t6", &page6);           // Hobbyblinds
+NexText p6t7 = NexText(6, 9, "t7", &page6);           // fleurblinds
+NexText p6t8 = NexText(6, 10, "t8", &page6);          // fleurcam
+NexText p6t9 = NexText(6, 11, "t9", &page6);          // buffetkast
+
 NexRtc  rtc;
 
 //Register a button object to the touch event list  
 NexTouch *nex_listen_list[] = {
   &p0b0,
   &p0b1,
-  &p0n0,
   &p0h0,
   &p0b2,
   &p0b3,
-  &p0n1,
   &p0h1,
-  &p0t1,
-  &p0t2,
   &p1bt0,
   &p1bt1,
   &p1bt2,
-  &p2n0,
-  &p2n1,
-  &p2t0,
-  &p2s0,
-  &p5t5,
+  &p6t0,
   &page0,
   &page1,
   &page2,
   &page3,
   &page4,
   &page5,
+  &page6,
   NULL
 };
 
@@ -154,20 +157,20 @@ void p1bt2PushCallback(void *ptr)
   p1bt2.getValue(&dual_state);
   if(dual_state) { MQTTClient.publish("cmnd/vensterbankvoor/POWER1", "ON"); } else { MQTTClient.publish("cmnd/vensterbankvoor/POWER1", "OFF"); }
 }
-void p5t5PushCallback(void *ptr)
+void p6t0PushCallback(void *ptr)
 {
   uint32_t bgc;
-  p5t5.Get_background_color_bco(&bgc);
+  p6t0.Get_background_color_bco(&bgc);
   if (bgc == 65535) { // White background color
     // Enable Debugging
     Serial.begin(115200);
     ArduinoOTA.begin();
-    p5t5.Set_background_color_bco (28651);
+    p6t0.Set_background_color_bco (28651);
   } else if (bgc == 28651) { // Green background color
     // Disable Debugging
     Serial.end();
     ArduinoOTA.end();
-    p5t5.Set_background_color_bco (65535);
+    p6t0.Set_background_color_bco (65535);
   }
 }
 void page0PushCallback(void *ptr) { CurrentPage = 0; }
@@ -176,6 +179,7 @@ void page2PushCallback(void *ptr) { CurrentPage = 2; for (byte i = 0; i < Wasmac
 void page3PushCallback(void *ptr) { CurrentPage = 3; }
 void page4PushCallback(void *ptr) { CurrentPage = 4; }
 void page5PushCallback(void *ptr) { CurrentPage = 5; } 
+void page6PushCallback(void *ptr) { CurrentPage = 6; } 
 
 
 // This function is executed when some device publishes a message to a topic that your ESP8266 is subscribed to
@@ -243,6 +247,14 @@ void callback(String topic, byte* message, unsigned int length) {
       p2s0.addValue(0, WasmachineBuffer.last()); 
     }
   }
+  else if (topic=="tele/fleurblinds/LWT") { if(messageTemp=="Online") { p6t3.Set_background_color_bco(28651); } else { p6t3.Set_background_color_bco(64073); } }
+  else if (topic=="tele/whiskeykast/LWT") { if(messageTemp=="Online") { p6t4.Set_background_color_bco(28651); } else { p6t4.Set_background_color_bco(64073); } }
+  else if (topic=="tele/wasmachine/LWT") { if(messageTemp=="Online") { p6t5.Set_background_color_bco(28651); } else { p6t5.Set_background_color_bco(64073); } }
+  else if (topic=="tele/vensterbankvoor/LWT") { if(messageTemp=="Online") { p6t6.Set_background_color_bco(28651); } else { p6t6.Set_background_color_bco(64073); } }
+  else if (topic=="tele/hobbyblinds/LWT") { if(messageTemp=="Online") { p6t7.Set_background_color_bco(28651); } else { p6t7.Set_background_color_bco(64073); } }
+  else if (topic=="tele/fleurcam/LWT") { if(messageTemp=="Online") { p6t8.Set_background_color_bco(28651); } else { p6t8.Set_background_color_bco(64073); } }
+  else if (topic=="tele/buffetkast/LWT") { if(messageTemp=="Online") { p6t9.Set_background_color_bco(28651); } else { p6t9.Set_background_color_bco(64073); } }
+
   Serial.println();
 }
 
@@ -269,7 +281,7 @@ void setup_wifi() {
   Serial.println("");
   Serial.print("WiFi connected - ");
   Serial.println("IP: " + WiFi.localIP().toString() + " | SUBNET: " + WiFi.subnetMask().toString() + " | GATEWAY: " + WiFi.gatewayIP().toString());
-  p0t2.Set_background_color_bco(28651); // Green background color
+  p6t2.Set_background_color_bco(28651); // Green background color
   p5t5.setText(WiFi.localIP().toString().c_str());
 }
 
@@ -286,10 +298,11 @@ void setup_mqtt() {
     if (MQTTClient.connect(mqttDeviceName, mqttUser, mqttPassword )) {
       digitalWrite (BUILTIN_LED, LOW);
       Serial.println("connected");
-      p0t1.Set_background_color_bco(28651); // Green background color
+      p6t1.Set_background_color_bco(28651);   // Green background color
       MQTTClient.subscribe("stat/+/RESULT");  // Power on/off change data
       MQTTClient.subscribe("tele/+/STATE");   // Power on/off periodic state data
       MQTTClient.subscribe("tele/+/SENSOR");  // Sensor periodic data 
+      MQTTClient.subscribe("tele/+/LWT");     // Online/Offline status of devices
       wakeup();
     } else {
       Serial.print("failed with state ");
@@ -319,13 +332,14 @@ void setup(void) {
   p1bt0.attachPush(p1bt0PushCallback, &p1bt0);  // Buffetkast
   p1bt1.attachPush(p1bt1PushCallback, &p1bt1);  // Whiskeykast
   p1bt2.attachPush(p1bt2PushCallback, &p1bt2);  // Vensterbankvoor
-  p5t5.attachPush(p5t5PushCallback, &p5t5);     // Touch IPAddress: enable/disable Debug messages
+  p6t0.attachPush(p6t0PushCallback, &p6t0);     // enable/disable Debugging
   page0.attachPush(page0PushCallback, &page0);  // Page0 Blinds
   page1.attachPush(page1PushCallback, &page1);  // Page1 Switches
   page2.attachPush(page2PushCallback, &page2);  // Page2 Energy
   page3.attachPush(page3PushCallback, &page3);  // Page3 
   page4.attachPush(page4PushCallback, &page4);  // Page4 
   page5.attachPush(page5PushCallback, &page5);  // Page5 About
+  page6.attachPush(page6PushCallback, &page6);  // Page6 Debug
     
   setup_wifi();
 
@@ -369,14 +383,14 @@ void loop(void){
 
   // Reconnect Wifi if not connected
   if (WiFi.status() != WL_CONNECTED) {  
-    p0t2.Set_background_color_bco(64073); // Red background color
+    p6t2.Set_background_color_bco(64073); // Red background color
     setup_wifi();
   }  
 
   // Reconnect MQTT if not connected
   if (!MQTTClient.connected()) {
     digitalWrite (BUILTIN_LED, HIGH);
-    p0t1.Set_background_color_bco(64073); // Red background color
+    p6t1.Set_background_color_bco(64073); // Red background color
     setup_mqtt();
   }
 
