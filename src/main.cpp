@@ -8,6 +8,7 @@
 #include <ArduinoOTA.h>
 
 //#include "BluetoothSerial.h"
+#define dbSerial Serial
 
 // Change the credentials below, so your ESP8266 connects to your router and MQTT Server
 const char* ssid = "";
@@ -163,12 +164,12 @@ void p6t0PushCallback(void *ptr)
   p6t0.Get_background_color_bco(&bgc);
   if (bgc == 65535) { // White background color
     // Enable Debugging
-    Serial.begin(115200);
+    dbSerial.begin(115200);
     ArduinoOTA.begin();
     p6t0.Set_background_color_bco (28651);
   } else if (bgc == 28651) { // Green background color
     // Disable Debugging
-    Serial.end();
+    dbSerial.end();
     ArduinoOTA.end();
     p6t0.Set_background_color_bco (65535);
   }
@@ -186,16 +187,16 @@ void page6PushCallback(void *ptr) { CurrentPage = 6; }
 // Change the function below to add logic to your program, so when a device publishes a message to a topic that 
 // your ESP8266 is subscribed you can actually do something
 void callback(String topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
-  Serial.print(". Message: ");
+  dbSerial.print("Message arrived on topic: ");
+  dbSerial.print(topic);
+  dbSerial.print(". Message: ");
   String messageTemp;
   
   for (unsigned int i = 0; i < length; i++) {
-    Serial.print((char)message[i]);
+    dbSerial.print((char)message[i]);
     messageTemp += (char)message[i];
   }
-  Serial.println();
+  dbSerial.println();
 
   StaticJsonBuffer<512> jsonBuffer;
   JsonObject& mqttjson = jsonBuffer.parseObject(messageTemp);
@@ -255,11 +256,11 @@ void callback(String topic, byte* message, unsigned int length) {
   else if (topic=="tele/fleurcam/LWT") { if(messageTemp=="Online") { p6t8.Set_background_color_bco(28651); } else { p6t8.Set_background_color_bco(64073); } }
   else if (topic=="tele/buffetkast/LWT") { if(messageTemp=="Online") { p6t9.Set_background_color_bco(28651); } else { p6t9.Set_background_color_bco(64073); } }
 
-  Serial.println();
+  dbSerial.println();
 }
 
 void wakeup() {
-  Serial.println("Wakeup: retrieve all device states");
+  dbSerial.println("Wakeup: retrieve all device states");
   MQTTClient.publish("cmnd/sonoffs/STATE", "");     // retrieve all device states
   MQTTClient.loop();
 }
@@ -267,20 +268,20 @@ void wakeup() {
 void setup_wifi() {
   delay(10);
   // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  dbSerial.println();
+  dbSerial.print("Connecting to ");
+  dbSerial.println(ssid);
   WiFi.mode(WIFI_STA);
   WiFi.config(ip_address, ip_gateway, ip_subnet, ip_dns);
   WiFi.begin(ssid, password);
   WiFi.setHostname(mqttDeviceName);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    dbSerial.print(".");
   }
-  Serial.println("");
-  Serial.print("WiFi connected - ");
-  Serial.println("IP: " + WiFi.localIP().toString() + " | SUBNET: " + WiFi.subnetMask().toString() + " | GATEWAY: " + WiFi.gatewayIP().toString());
+  dbSerial.println("");
+  dbSerial.print("WiFi connected - ");
+  dbSerial.println("IP: " + WiFi.localIP().toString() + " | SUBNET: " + WiFi.subnetMask().toString() + " | GATEWAY: " + WiFi.gatewayIP().toString());
   p6t2.Set_background_color_bco(28651); // Green background color
   p5t5.setText(WiFi.localIP().toString().c_str());
 }
@@ -293,11 +294,11 @@ void setup_mqtt() {
 
   // Loop until we're reconnected
   while (!MQTTClient.connected()) {
-    Serial.println("Connecting to MQTT...");
+    dbSerial.println("Connecting to MQTT...");
  
     if (MQTTClient.connect(mqttDeviceName, mqttUser, mqttPassword )) {
       digitalWrite (BUILTIN_LED, LOW);
-      Serial.println("connected");
+      dbSerial.println("connected");
       p6t1.Set_background_color_bco(28651);   // Green background color
       MQTTClient.subscribe("stat/+/RESULT");  // Power on/off change data
       MQTTClient.subscribe("tele/+/STATE");   // Power on/off periodic state data
@@ -305,9 +306,9 @@ void setup_mqtt() {
       MQTTClient.subscribe("tele/+/LWT");     // Online/Offline status of devices
       wakeup();
     } else {
-      Serial.print("failed with state ");
-      Serial.print(MQTTClient.state());
-      Serial.println(" try again in 5 seconds");
+      dbSerial.print("failed with state ");
+      dbSerial.print(MQTTClient.state());
+      dbSerial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
       delay(5000); 
     }
@@ -317,7 +318,7 @@ void setup_mqtt() {
 void setup(void) {
   pinMode(BUILTIN_LED, OUTPUT); digitalWrite (BUILTIN_LED, HIGH);
   // Start debuggin serial port
-  Serial.begin(115200);
+  dbSerial.begin(115200);
   
   //Set the baudrate which is for debug and communicate with Nextion screen
   nexInit();
@@ -358,21 +359,21 @@ void setup(void) {
         type = "filesystem";
 
       // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-      Serial.println("Start updating " + type);
+      dbSerial.println("Start updating " + type);
     })
     .onEnd([]() {
-      Serial.println("\nEnd");
+      dbSerial.println("\nEnd");
     })
     .onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+      dbSerial.printf("Progress: %u%%\r", (progress / (total / 100)));
     })
     .onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-      else if (error == OTA_END_ERROR) Serial.println("End Failed");
+      dbSerial.printf("Error[%u]: ", error);
+      if (error == OTA_AUTH_ERROR) dbSerial.println("Auth Failed");
+      else if (error == OTA_BEGIN_ERROR) dbSerial.println("Begin Failed");
+      else if (error == OTA_CONNECT_ERROR) dbSerial.println("Connect Failed");
+      else if (error == OTA_RECEIVE_ERROR) dbSerial.println("Receive Failed");
+      else if (error == OTA_END_ERROR) dbSerial.println("End Failed");
     });
 }
 
