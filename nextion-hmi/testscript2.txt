@@ -1,0 +1,174 @@
+sendCommand: bkcmd=3
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page 0
+recv command timeout
+recvRetCommandFinished err
+
+Connecting to Pandelaar
+....
+WiFi connected - IP: 192.168.1.51 | SUBNET: 255.255.252.0 | GATEWAY: 192.168.0.1
+sendCommand: page6.t2.bco=28651
+sendCommand: ref page6.t2
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page5.t5.txt="192.168.1.51"
+recv command timeout
+recvRetCommandFinished err
+Connecting to MQTT...
+connected
+sendCommand: page6.t1.bco=28651
+sendCommand: ref page6.t1
+recv command timeout
+recvRetCommandFinished err
+Wakeup: retrieve all device states
+Message arrived on topic: tele/buffetkast/LWT. Message: Online
+sendCommand: page6.t9.bco=28651
+sendCommand: ref page6.t9
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/fleurcam/LWT. Message: Online
+sendCommand: page6.t8.bco=28651
+sendCommand: ref page6.t8
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/hobbyblinds/LWT. Message: Online
+sendCommand: page6.t7.bco=28651
+sendCommand: ref page6.t7
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/vensterbankvoor/LWT. Message: Online
+sendCommand: page6.t6.bco=28651
+sendCommand: ref page6.t6
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/wasmachine/LWT. Message: Online
+sendCommand: page6.t5.bco=28651
+sendCommand: ref page6.t5
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/whiskeykast/LWT. Message: Online
+sendCommand: page6.t4.bco=28651
+sendCommand: ref page6.t4
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/fleurblinds/LWT. Message: Offline
+sendCommand: page6.t3.bco=64073
+sendCommand: ref page6.t3
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: stat/buffetkast/RESULT. Message: {"Time":"2019-07-23T19:41:50","Uptime":"86T05:52:03","Vcc":3.399,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":50}}
+sendCommand: page1.bt0.val=1
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: stat/vensterbankvoor/RESULT. Message: {"Time":"2019-07-23T19:41:50","Uptime":"86T05:53:40","Vcc":3.390,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":70,"LinkCount":3,"Downtime":"0T00:00:54"}}
+sendCommand: page1.bt2.val=0
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: stat/wasmachine/RESULT. Message: {"Time":"2019-07-23T19:41:50","Uptime":"80T09:22:41","Vcc":3.401,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":66}}
+
+Message arrived on topic: stat/fleurcam/RESULT. Message: {"Time":"2019-07-23T19:41:51","Uptime":"51T06:12:52","Vcc":3.523,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100}}
+
+Message arrived on topic: stat/hobbyblinds/RESULT. Message: {"Time":"2019-07-23T19:41:51","Uptime":"26T00:12:14","SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER1":"OFF","POWER2":"OFF","POWER3":"OFF","POWER4":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100,"LinkCount":1,"Downtime":"0T00:00:06","DeepSleep":0,"Heap":30424}}
+
+Message arrived on topic: stat/whiskeykast/RESULT. Message: {"Time":"2019-07-23T19:41:50","Uptime":"0T00:36:29","Vcc":3.424,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":72}}
+sendCommand: page1.bt1.val=1
+recv command timeout
+recvRetCommandFinished err
+sendCommand: rtc0=2019
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/wasmachine/STATE. Message: {"Time":"2019-07-23T19:42:08","Uptime":"80T09:22:59","Vcc":3.399,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":66}}
+
+Message arrived on topic: tele/wasmachine/SENSOR. Message: {"Time":"2019-07-23T19:42:08","ENERGY":{"TotalStartTime":"2018-11-24T22:05:23","Total":140.816,"Yesterday":0.000,"Today":0.000,"Period":0,"Power":0,"ApparentPower":0,"ReactivePower":0,"Factor":0.00,"Voltage":229,"Current":0.000}}
+sendCommand: page2.n0.val=229
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page2.n1.val=0
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page2.t0.txt="0.000"
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/fleurcam/STATE. Message: {"Time":"2019-07-23T19:42:54","Uptime":"51T06:13:55","Vcc":3.523,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100}}
+
+Message arrived on topic: tele/wasmachine/STATE. Message: {"Time":"2019-07-23T19:43:08","Uptime":"80T09:23:59","Vcc":3.399,"SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":68}}
+
+Message arrived on topic: tele/wasmachine/SENSOR. Message: {"Time":"2019-07-23T19:43:08","ENERGY":{"TotalStartTime":"2018-11-24T22:05:23","Total":140.816,"Yesterday":0.000,"Today":0.000,"Period":0,"Power":0,"ApparentPower":0,"ReactivePower":0,"Factor":0.00,"Voltage":229,"Current":0.000}}
+sendCommand: page2.n0.val=229
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page2.n1.val=0
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page2.t0.txt="0.000"
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/buffetkast/STATE. Message: {"Time":"2019-07-23T19:43:13","Uptime":"86T05:53:26","Vcc":3.399,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"POWER":"ON","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":50}}
+sendCommand: page1.bt0.val=1
+recv command timeout
+recvRetCommandFinished err
+
+Message arrived on topic: tele/hobbyblinds/STATE. Message: {"Time":"2019-07-23T19:53:18","Uptime":"26T00:23:41","SleepMode":"Dynamic","Sleep":0,"LoadAvg":999,"POWER1":"OFF","POWER2":"OFF","POWER3":"OFF","POWER4":"OFF","Wifi":{"AP":1,"SSId":"Pandelaar","BSSId":"28:6C:07:98:E3:95","Channel":9,"RSSI":100,"LinkCount":1,"Downtime":"0T00:00:06","DeepSleep":0,"Heap":30424}}
+
+Message arrived on topic: tele/hobbyblinds/SENSOR. Message: {"Time":"2019-07-23T19:53:18","SHUTTER-1":{"position":0, "direction":0}}
+sendCommand: page0.h1.val=0
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page0.n1.val=0
+recv command timeout
+recvRetCommandFinished err
+sendCommand: page0.n1.bco=63390
+sendCommand: ref page0.n1
+recv command timeout
+recvRetCommandFinished err
+
+
+
+----
+
+
+bkcmd=3
+page 0
+page6.t2.bco=28651
+ref page6.t2
+page5.t5.txt="192.168.1.51"
+page6.t1.bco=28651
+ref page6.t1
+page6.t9.bco=28651
+ref page6.t9
+page6.t8.bco=28651
+ref page6.t8
+page6.t7.bco=28651
+ref page6.t7
+page6.t6.bco=28651
+ref page6.t6
+page6.t5.bco=28651
+ref page6.t5
+page6.t4.bco=28651
+ref page6.t4
+page6.t3.bco=64073
+ref page6.t3
+page1.bt0.val=1
+page1.bt2.val=0
+page1.bt1.val=1
+rtc0=2019
+page2.n0.val=229
+page2.n1.val=0
+page2.t0.txt="0.000"
+page0.h1.val=0
+page0.n1.val=0
+page0.n1.bco=63390
+ref page0.n1
