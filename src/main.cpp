@@ -206,7 +206,7 @@ void callback(String topic, byte* message, unsigned int length) {
     uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
     p0h0.setValue(tempval);
     p0n0.setValue(tempval);
-    p0n0.Set_background_color_bco(63390);
+    p0n0.Set_background_color_bco(28651);
 
   } 
   else if(((topic=="tele/hobbyblinds/SENSOR") && (mqttjson["SHUTTER-1"])) || ((topic=="tele/hobbyblinds/RESULT") && (mqttjson["SHUTTER-1"]))){ 
@@ -214,7 +214,7 @@ void callback(String topic, byte* message, unsigned int length) {
     uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
     p0h1.setValue(tempval);
     p0n1.setValue(tempval);
-    p0n1.Set_background_color_bco(63390);
+    p0n1.Set_background_color_bco(28651);
   }
   else if((topic=="stat/buffetkast/RESULT") || (topic=="tele/buffetkast/STATE")){
     // Buffetkast button (button: p1bt0)
