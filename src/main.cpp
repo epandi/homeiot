@@ -324,7 +324,7 @@ void setup(void) {
 
   pinMode(BUILTIN_LED, OUTPUT); digitalWrite (BUILTIN_LED, HIGH);
   // Start debuggin serial port
-  dbSerial.begin(115200);
+  // dbSerial.begin(115200);
   
   //Set the baudrate which is for debug and communicate with Nextion screen
   nexInit();
