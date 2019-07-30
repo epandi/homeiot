@@ -201,7 +201,7 @@ void callback(String topic, byte* message, unsigned int length) {
   StaticJsonBuffer<512> jsonBuffer;
   JsonObject& mqttjson = jsonBuffer.parseObject(messageTemp);
   
-  if(((topic=="tele/fleurblinds/SENSOR") && (mqttjson["SHUTTER-1"])) || ((topic=="tele/fleurblinds/RESULT") && (mqttjson["SHUTTER-1"]))){ 
+  if(((topic=="tele/fleurblinds/SENSOR") && (mqttjson.containsKey("SHUTTER-1"))) || ((topic=="tele/fleurblinds/RESULT") && (mqttjson.containsKey("SHUTTER-1")))) { 
     // Fleurblinds percentage/slider (text: p0n0; slider: p0h0) || {"Time":"2019-07-01T19:27:10","SHUTTER-1":{"position":100, "direction":0}}
     uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
     p0h0.setValue(tempval);
@@ -209,7 +209,7 @@ void callback(String topic, byte* message, unsigned int length) {
     p0n0.Set_background_color_bco(28651);
 
   } 
-  else if(((topic=="tele/hobbyblinds/SENSOR") && (mqttjson["SHUTTER-1"])) || ((topic=="tele/hobbyblinds/RESULT") && (mqttjson["SHUTTER-1"]))){ 
+  else if(((topic=="tele/hobbyblinds/SENSOR") && (mqttjson.containsKey("SHUTTER-1"))) || ((topic=="tele/hobbyblinds/RESULT") && (mqttjson.containsKey("SHUTTER-1")))) { 
     // Hobbyblinds percentage/slider (text: p0n1; slider: p0h1) || {"Time":"2019-07-01T19:27:10","SHUTTER-1":{"position":100, "direction":0}}
     uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
     p0h1.setValue(tempval);
@@ -228,11 +228,11 @@ void callback(String topic, byte* message, unsigned int length) {
     // Sync RTC Clock when available
     if (mqttjson.containsKey("Time"))
     {
-    uint32_t d_y, d_m, d_d, t_h, t_m, t_s;
-    sscanf(mqttjson["Time"], "%4d-%2d-%2dT%2d:%2d:%2d", &d_y, &d_m, &d_d, &t_h, &t_m, &t_s);
-    uint32_t  time[7] = {d_y,d_m,d_d,t_h,t_m,t_s};
-    rtc.write_rtc_time(time);
-  }
+      uint32_t d_y, d_m, d_d, t_h, t_m, t_s;
+      sscanf(mqttjson["Time"], "%4d-%2d-%2dT%2d:%2d:%2d", &d_y, &d_m, &d_d, &t_h, &t_m, &t_s);
+      uint32_t  time[7] = {d_y,d_m,d_d,t_h,t_m,t_s};
+      rtc.write_rtc_time(time);
+    }
   }
   else if((topic=="stat/vensterbankvoor/RESULT") || (topic=="tele/vensterbankvoor/STATE")){
     // Vensterbankvoor button (button: p1bt2)
