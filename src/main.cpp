@@ -320,6 +320,8 @@ void setup_mqtt() {
 }
 
 void setup(void) {
+  delay(1000);
+
   pinMode(BUILTIN_LED, OUTPUT); digitalWrite (BUILTIN_LED, HIGH);
   // Start debuggin serial port
   dbSerial.begin(115200);
