@@ -208,7 +208,7 @@ void callback(String topic, byte* message, unsigned int length) {
   }
   dbSerial.println();
 
-  StaticJsonBuffer<512> jsonBuffer;
+  StaticJsonBuffer<1024> jsonBuffer;
   JsonObject& mqttjson = jsonBuffer.parseObject(messageTemp);
   
   if(((topic=="tele/fleurblinds/SENSOR") && (mqttjson.containsKey("SHUTTER-1"))) || ((topic=="tele/fleurblinds/RESULT") && (mqttjson.containsKey("SHUTTER-1")))) { 
