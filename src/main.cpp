@@ -252,8 +252,6 @@ void callback(String topic, byte* message, unsigned int length) {
   else if((topic=="stat/barkeuken/RESULT") || (topic=="tele/barkeuken/STATE")){
     // Vensterbankvoor button (button: p1bt3)
     const char* tempval = mqttjson["POWER"];
-    dbSerial.print("aaaaaaaaaaa:");
-    dbSerial.print(tempval);
     if(strcmp(tempval, "ON") == 0){ p1bt3.setValue(1); } else if(strcmp(tempval, "OFF") == 0){ p1bt3.setValue(0); }
   }
   else if(topic=="tele/wasmachine/SENSOR"){
