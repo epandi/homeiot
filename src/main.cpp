@@ -184,7 +184,7 @@ void p6t0PushCallback(void *ptr)
     p6t0.Set_background_color_bco (65535);
   }
 }
-void page0PushCallback(void *ptr) { CurrentPage = 0; }
+void page0PushCallback(void *ptr) { CurrentPage = 0; MQTTClient.publish("cmnd/fleurblinds/STATUS", "8"); MQTTClient.publish("cmnd/hobbyblinds/STATUS", "8"); }
 void page1PushCallback(void *ptr) { CurrentPage = 1; }
 void page2PushCallback(void *ptr) { CurrentPage = 2; for (byte i = 0; i < WasmachineBuffer.size() - 1; i++) { p2s0.addValue(0, WasmachineBuffer[i]); } }
 void page3PushCallback(void *ptr) { CurrentPage = 3; }
@@ -211,17 +211,17 @@ void callback(String topic, byte* message, unsigned int length) {
   StaticJsonBuffer<1024> jsonBuffer;
   JsonObject& mqttjson = jsonBuffer.parseObject(messageTemp);
   
-  if(((topic=="tele/fleurblinds/SENSOR") && (mqttjson.containsKey("SHUTTER-1"))) || ((topic=="tele/fleurblinds/RESULT") && (mqttjson.containsKey("SHUTTER-1")))) { 
+  if(((topic=="tele/fleurblinds/SENSOR") && mqttjson["SHUTTER-1"]["position"]) || ((topic=="tele/fleurblinds/RESULT") && mqttjson["SHUTTER-1"]["position"]) || ((topic=="stat/fleurblinds/STATUS8") && mqttjson["StatusSNS"]["SHUTTER-1"]["position"])) { 
     // Fleurblinds percentage/slider (text: p0n0; slider: p0h0) || {"Time":"2019-07-01T19:27:10","SHUTTER-1":{"position":100, "direction":0}}
-    uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
+    uint32_t tempval = (mqttjson.containsKey("StatusSNS") ? mqttjson["StatusSNS"]["SHUTTER-1"]["position"] : mqttjson["SHUTTER-1"]["position"]);
     p0h0.setValue(tempval);
     p0n0.setValue(tempval);
     p0n0.Set_background_color_bco(28651);
 
   } 
-  else if(((topic=="tele/hobbyblinds/SENSOR") && (mqttjson.containsKey("SHUTTER-1"))) || ((topic=="tele/hobbyblinds/RESULT") && (mqttjson.containsKey("SHUTTER-1")))) { 
+  else if(((topic=="tele/hobbyblinds/SENSOR") && mqttjson["SHUTTER-1"]["position"]) || ((topic=="tele/hobbyblinds/RESULT") && mqttjson["SHUTTER-1"]["position"]) || ((topic=="stat/hobbyblinds/STATUS8") && mqttjson["StatusSNS"]["SHUTTER-1"]["position"])) { 
     // Hobbyblinds percentage/slider (text: p0n1; slider: p0h1) || {"Time":"2019-07-01T19:27:10","SHUTTER-1":{"position":100, "direction":0}}
-    uint32_t tempval = mqttjson["SHUTTER-1"]["position"];
+    uint32_t tempval = (mqttjson.containsKey("StatusSNS") ? mqttjson["StatusSNS"]["SHUTTER-1"]["position"] : mqttjson["SHUTTER-1"]["position"]);
     p0h1.setValue(tempval);
     p0n1.setValue(tempval);
     p0n1.Set_background_color_bco(28651);
@@ -280,7 +280,8 @@ void callback(String topic, byte* message, unsigned int length) {
 
 void wakeup() {
   dbSerial.println("Wakeup: retrieve all device states");
-  MQTTClient.publish("cmnd/sonoffs/STATE", "");     // retrieve all device states
+  MQTTClient.publish("cmnd/sonoffs/STATE", "");       // retrieve all device states
+  MQTTClient.publish("cmnd/sonoffs/STATUS", "8");     // retrieve all device states
   MQTTClient.loop();
 }
 
@@ -320,10 +321,8 @@ void setup_mqtt() {
       dbSerial.println("connected");
       p6t1.Set_background_color_bco(28651);   // Green background color
       MQTTClient.subscribe("stat/+/RESULT");  // stat/+/RESULT: Power on/off change data
-      MQTTClient.subscribe("tele/+/RESULT");  // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
-      MQTTClient.subscribe("tele/+/STATE");   // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
-      MQTTClient.subscribe("tele/+/SENSOR");  // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
-      MQTTClient.subscribe("tele/+/LWT");     // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
+      MQTTClient.subscribe("stat/+/STATUS8"); // stat/+/STATUS8: Blinds shutter position
+      MQTTClient.subscribe("tele/+/+");       // tele/+/+: tele/+/STATE: Power on/off periodic state data  |  tele/+/SENSOR: Sensor periodic data  |  tele/+/LWT: device online/offline status  |  tele/+/RESULT: blinds update
       wakeup();
     } else {
       dbSerial.print("failed with state ");
