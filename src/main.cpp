@@ -281,7 +281,7 @@ void callback(String topic, byte* message, unsigned int length) {
 void wakeup() {
   dbSerial.println("Wakeup: retrieve all device states");
   MQTTClient.publish("cmnd/sonoffs/STATE", "");       // retrieve all device states
-  MQTTClient.publish("cmnd/sonoffs/STATUS", "8");     // retrieve all device states
+  MQTTClient.publish("cmnd/sonoffs/STATUS", "8");     // retrieve shutter positions and other sensor data
   MQTTClient.loop();
 }
 
